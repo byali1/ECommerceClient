@@ -4,6 +4,7 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { FooterComponent } from './footer/footer.component';
 import { LayoutModule } from '../layout.module';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -14,7 +15,7 @@ import { LayoutModule } from '../layout.module';
     FooterComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,RouterModule
   ],
   exports:[HeaderComponent, SidebarComponent, FooterComponent]
 
