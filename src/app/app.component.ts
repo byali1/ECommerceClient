@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+// import * as $ from 'jquery';
+
+
 
 
 
@@ -14,3 +17,7 @@ export class AppComponent {
   constructor() {
   }
 }
+
+// $.get("https://localhost:7226/api/products",data=>{
+//   console.log(data);
+// });
