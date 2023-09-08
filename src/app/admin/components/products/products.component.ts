@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
-import { Product } from 'src/app/contracts/product';
 import { HttpClientService } from 'src/app/services/common/http-client.service';
 
 @Component({
@@ -17,20 +16,11 @@ export class ProductsComponent extends BaseComponent implements OnInit {
     super(spinner);
   }
   ngOnInit(): void {
-    this.showSpinner(SpinnerType.BallSpinClockWise);
+    //this.showSpinner(SpinnerType.BallSpinClockWise);
 
     
 
-    // this.httpClientService
-    //   .post(
-    //     { controller: 'products' },
-    //     {
-    //       name: 'kalem',
-    //       stock: 100,
-    //       price: 15,
-    //     }
-    //   )
-    //   .subscribe();
+    
 
     // this.httpClientService.put(
     //   { controller: 'products' },
@@ -45,13 +35,13 @@ export class ProductsComponent extends BaseComponent implements OnInit {
 
       // this.httpClientService.delete({controller:"products"},"028e191f-1674-4f07-8a2c-c9ed55209fb7").subscribe();
 
-      this.httpClientService
-      .get<Product[]>({
-        controller:"products",
-      })
-      .subscribe((data) => {
-        console.log(data);
-      });
+      // this.httpClientService
+      // .get<Product[]>({
+      //   controller:"products",
+      // })
+      // .subscribe((data) => {
+      //   console.log(data);
+      // });
 
 
   }
