@@ -8,7 +8,7 @@ export class BaseComponent {
 
     setTimeout(() => {
       this.hideSpinner(spinnerType);
-    }, 3000);
+    }, 1000);
   }
 
   hideSpinner(spinnerType: SpinnerType) {
