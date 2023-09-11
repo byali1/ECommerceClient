@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
+import { Create_Product } from 'src/app/contracts/create_product';
 import { HttpClientService } from 'src/app/services/common/http-client.service';
+import { ListComponent } from './list/list.component';
 
 @Component({
   selector: 'app-products',
@@ -16,33 +18,14 @@ export class ProductsComponent extends BaseComponent implements OnInit {
     super(spinner);
   }
   ngOnInit(): void {
-    //this.showSpinner(SpinnerType.BallSpinClockWise);
+  
+  }
 
-    
+  //CRUD Sonrası datanın refresh edilmesi için
+  @ViewChild(ListComponent) listComponents: ListComponent;
 
-    
-
-    // this.httpClientService.put(
-    //   { controller: 'products' },
-    //   {
-    //     id: 'b1d8cb91-0b40-48c4-89d4-6a2356d6fee0',
-    //     name: 'Kalem',
-    //     price: 25,
-    //     stock: 120
-    //   }
-    // ).subscribe();
-
-
-      // this.httpClientService.delete({controller:"products"},"028e191f-1674-4f07-8a2c-c9ed55209fb7").subscribe();
-
-      // this.httpClientService
-      // .get<Product[]>({
-      //   controller:"products",
-      // })
-      // .subscribe((data) => {
-      //   console.log(data);
-      // });
-
+  createdProduct(createdProduct:Create_Product){
+    this.listComponents.getProductsPerPage();
 
   }
 }
