@@ -7,8 +7,16 @@ import {
   Output,
   Renderer2,
 } from '@angular/core';
+import { async } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
+//import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerType } from 'src/app/base/base.component';
+import {
+  DeleteDialogComponent,
+  DeleteState,
+} from 'src/app/dialogs/delete-dialog/delete-dialog.component';
+//Refactor edilecek. (ProductService)
 import { ProductService } from 'src/app/services/common/models/product.service';
 declare var $: any;
 
@@ -20,7 +28,8 @@ export class DeleteDirective {
     private element: ElementRef,
     private _renderer: Renderer2,
     private productService: ProductService,
-    private spinner:NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    public dialog: MatDialog
   ) {
     const img = _renderer.createElement('img');
     img.setAttribute('src', '../../../../../assets/icons/delete_data.png');
@@ -35,12 +44,26 @@ export class DeleteDirective {
   @Output() callback: EventEmitter<any> = new EventEmitter(); //data refresh
 
   @HostListener('click')
-  async deleteProduct(event: any) {
-    this.spinner.show(SpinnerType.Cog);
-    const td: HTMLTableCellElement = this.element.nativeElement;
-    await this.productService.deleteProduct(this.id);
-    $(td.parentElement).fadeOut(450, () => {
-      this.callback.emit();
+   deleteProduct(event: any) {
+    this.openDialog(async() => {
+      this.spinner.show(SpinnerType.Cog);
+      const td: HTMLTableCellElement = this.element.nativeElement;
+      await this.productService.deleteProduct(this.id);
+      $(td.parentElement).fadeOut(450, () => {
+        this.callback.emit();
+      });
+    });
+  }
+
+  openDialog(deleteProduct: any): void {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: DeleteState.Yes,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == DeleteState.Yes) {
+        deleteProduct();
+      }
     });
   }
 }
