@@ -30,6 +30,18 @@
         <th mat-header-cell *matHeaderCellDef> Updated Date </th>
         <td mat-cell *matCellDef="let element"> {{element.updatedDate | date :'medium'}} </td>
       </ng-container>
+
+      <!-- Delete Product Column --> 
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef class="text-danger">Delete</th>
+        <td [id]="element.id" mat-cell *matCellDef="let element" appDelete (callback)="getProductsPerPage()"><td> 
+      </ng-container>
+
+       <!-- Edit Product Column --> 
+       <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef class="text-warning">Edit</th>
+        <td mat-cell *matCellDef="let element"> <img class="w-50" src="../../../../../assets/icons/settings.png" > </td> 
+      </ng-container>
   
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
