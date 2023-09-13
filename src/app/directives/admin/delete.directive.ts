@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import {
   Directive,
   ElementRef,
@@ -9,15 +10,20 @@ import {
 } from '@angular/core';
 import { async } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
-//import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
+import { error } from 'jquery';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerType } from 'src/app/base/base.component';
 import {
   DeleteDialogComponent,
   DeleteState,
 } from 'src/app/dialogs/delete-dialog/delete-dialog.component';
-//Refactor edilecek. (ProductService)
-import { ProductService } from 'src/app/services/common/models/product.service';
+import {
+  AlertifyService,
+  MessageType,
+  Position,
+} from 'src/app/services/admin/alertify.service';
+import { HttpClientService } from 'src/app/services/common/http-client.service';
+
 declare var $: any;
 
 @Directive({
@@ -27,9 +33,10 @@ export class DeleteDirective {
   constructor(
     private element: ElementRef,
     private _renderer: Renderer2,
-    private productService: ProductService,
+    private httpClientService: HttpClientService,
     private spinner: NgxSpinnerService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private alertifyService: AlertifyService
   ) {
     const img = _renderer.createElement('img');
     img.setAttribute('src', '../../../../../assets/icons/delete_data.png');
@@ -41,17 +48,45 @@ export class DeleteDirective {
   }
 
   @Input() id: string; //data id
+  @Input() controller: string;
+
   @Output() callback: EventEmitter<any> = new EventEmitter(); //data refresh
 
   @HostListener('click')
-   deleteProduct(event: any) {
-    this.openDialog(async() => {
+  deleteProduct(event: any) {
+    this.openDialog(async () => {
       this.spinner.show(SpinnerType.Cog);
       const td: HTMLTableCellElement = this.element.nativeElement;
-      await this.productService.deleteProduct(this.id);
-      $(td.parentElement).fadeOut(450, () => {
-        this.callback.emit();
-      });
+
+      this.httpClientService
+        .delete(
+          {
+            controller: this.controller,
+          },
+          this.id
+        )
+        .subscribe(
+          (data) => {
+            $(td.parentElement).fadeOut(450, () => {
+              this.callback.emit();
+              this.alertifyService.message('Data başarıyla silindi.', {
+                dismissOthers: true,
+                messageType: MessageType.Success,
+                position: Position.BottomCenter,
+                delay: 3,
+              });
+            });
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.spinner.hide(SpinnerType.Cog);
+            this.alertifyService.message('HATA - Data silinemedi.', {
+              dismissOthers: true,
+              messageType: MessageType.Error,
+              position: Position.BottomCenter,
+              delay: 8,
+            });
+          }
+        );
     });
   }
 
