@@ -48,7 +48,7 @@ export class ListComponent extends BaseComponent implements OnInit {
     let allProducts: { totalCount: number; products: List_Product[] } =
       await this.productService.getProductsPerPage(
         this.paginator ? this.paginator.pageIndex : 0,
-        this.paginator ? this.paginator.pageSize : 5,
+        this.paginator ? this.paginator.pageSize : 10,
         () => this.hideSpinner(SpinnerType.Cog),
         (errorMessage) =>
           this.alertifyService.message(errorMessage, {
