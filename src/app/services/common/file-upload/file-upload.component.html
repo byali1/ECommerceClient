@@ -1,6 +1,6 @@
 <div class="my-5 mx-1">
     <ngx-file-drop dropZoneLabel="Drop files here" [accept]="options.accept" (onFileDrop)="selectedFiles($event)">
-        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector" >
             <div class="p-3 text-center">
                 <p class="mx-3 text-white">{{options.explanation}}</p>
                 <button class="btn btn-secondary" type="button" (click)="openFileSelector()">
@@ -8,18 +8,21 @@
             </div>
         </ng-template>
     </ngx-file-drop>
-    <div class="upload-table" *ngIf="files">
-        <table class="table">
+    <div class="upload-table mt-3 border-bottom border-3 border-danger rounded-3" *ngIf="files">
+        <table>
             <thead>
                 <tr>
-                    <th>Selected files:</th>
+                    <th class="fw-normal text-danger">Selected files:</th>
                 </tr>
             </thead>
             <tbody class="upload-name-style">
                 <tr *ngFor="let item of files; let i=index">
-                    <td><strong>{{ item.relativePath }}</strong></td>
+                    <td class="fw-normal">{{i+1}}. {{ item.relativePath }}</td>
                 </tr>
             </tbody>
         </table>
+
+
+
     </div>
 </div>
