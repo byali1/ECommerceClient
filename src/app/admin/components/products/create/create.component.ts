@@ -34,7 +34,7 @@ export class CreateComponent extends BaseComponent implements OnInit {
     controller: 'products',
     explanation: 'Drag images or select an image',
     isAdminPage: true,
-    accept:".png, .jpg, .jpeg"
+    accept:".png, .jpg, .jpeg, .webp"
   };
 
   createProduct(

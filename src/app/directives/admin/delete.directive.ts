@@ -40,13 +40,13 @@ export class DeleteDirective {
     private alertifyService: AlertifyService,
     private dialogService:DialogService
   ) {
-    const img = _renderer.createElement('img');
-    img.setAttribute('src', '../../../../../assets/icons/delete_data.png');
-    img.setAttribute('style', 'cursor:pointer');
-    img.classList.add('w-50');
+    //const img = _renderer.createElement('img');
+    //img.setAttribute('src', '../../../../../assets/icons/delete_data.png');
+    //img.setAttribute('style', 'cursor:pointer');
+    //img.classList.add('w-50');
     // img.width=25;
     // img.height=25;
-    _renderer.appendChild(element.nativeElement, img);
+    //_renderer.appendChild(element.nativeElement, img);
   }
 
   @Input() id: string; //data id
